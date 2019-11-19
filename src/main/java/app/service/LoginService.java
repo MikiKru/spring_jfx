@@ -71,4 +71,11 @@ public class LoginService {
             loginRepository.save(user);
         }
     }
+    public void clearUserProbes(int user_id){
+        if(loginRepository.findById(user_id).isPresent()) {
+            User user = loginRepository.findById(user_id).get();
+            user.setProbes(0);
+            loginRepository.save(user);
+        }
+    }
 }

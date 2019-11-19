@@ -38,6 +38,8 @@ public class LoginController {
                             "logowanie",
                             "ZALOGOWANO",
                             "Zalogowano użytkownika o loginie " + user.getLogin());
+                    loginService.changeStatus(user.getUser_id());
+                    loginService.clearUserProbes(user.getUser_id());
                 } else {
                     loginService.getAlertWindow(
                             Alert.AlertType.INFORMATION,
