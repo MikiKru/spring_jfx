@@ -22,7 +22,7 @@ public class LoginService {
     public LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
-    private String getPasswordEncodedByMd5(String password) throws NoSuchAlgorithmException, NoSuchAlgorithmException {
+    public String getPasswordEncodedByMd5(String password) throws NoSuchAlgorithmException, NoSuchAlgorithmException {
         MessageDigest md5Encoder = MessageDigest.getInstance("MD5");
         md5Encoder.update(password.getBytes(Charset.forName("UTF8")));
         final byte[] resultByte = md5Encoder.digest();
@@ -31,6 +31,10 @@ public class LoginService {
         return result;
     }
     // logowanie użytkownika
+    public User loginUserByLogin(String login){
+        return loginRepository.findFirstByLogin(login);
+    }
+
     public User loginUser(String login, String password) throws NoSuchAlgorithmException {
         return loginRepository
                 .findFirstByLoginAndPassword(
@@ -51,5 +55,20 @@ public class LoginService {
     // czyszczenie pól TF i PF
     public void clearField(TextField textField){
         textField.clear();
+    }
+    // aktywacja dezaktywacja użytkownika
+    public void changeStatus(int user_id){
+        if(loginRepository.findById(user_id).isPresent()) {
+            User user = loginRepository.findById(user_id).get();
+            user.setStatus(!user.isStatus());
+            loginRepository.save(user);
+        }
+    }
+    public void incrementUserProbes(int user_id){
+        if(loginRepository.findById(user_id).isPresent()) {
+            User user = loginRepository.findById(user_id).get();
+            user.setProbes(user.getProbes() + 1);
+            loginRepository.save(user);
+        }
     }
 }

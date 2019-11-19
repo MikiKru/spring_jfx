@@ -29,24 +29,34 @@ public class LoginController {
 
     @FXML
     void loginAction(ActionEvent event) throws NoSuchAlgorithmException {
-        User user = loginService.loginUser(
-                tfLogin.getText(), pfPassword.getText());
+        User user = loginService.loginUserByLogin(tfLogin.getText());
         if(user != null){
-            loginService.clearField(tfLogin);
-            loginService.clearField(pfPassword);
-            if(user.isStatus()) {
-                loginService.getAlertWindow(
-                        Alert.AlertType.INFORMATION,
-                        "logowanie",
-                        "ZALOGOWANO",
-                        "Zalogowano użytkownika o loginie " + user.getLogin());
+            if(user.getPassword().equals(loginService.getPasswordEncodedByMd5(pfPassword.getText()))){
+                if(user.isStatus()) {
+                    loginService.getAlertWindow(
+                            Alert.AlertType.INFORMATION,
+                            "logowanie",
+                            "ZALOGOWANO",
+                            "Zalogowano użytkownika o loginie " + user.getLogin());
+                } else {
+                    loginService.getAlertWindow(
+                            Alert.AlertType.INFORMATION,
+                            "logowanie",
+                            "KONTO NIEAKTYWNE",
+                            "Twoje konto został zablokowane!");
+                }
             } else {
+                user.setProbes(user.getProbes() + 1);
+                loginService.incrementUserProbes(user.getUser_id());
                 loginService.getAlertWindow(
                         Alert.AlertType.INFORMATION,
                         "logowanie",
-                        "KONTO NIEAKTYWNE",
-                        "Twoje konto został zablokowane!");
-
+                        "BŁAD LOGOWANIA",
+                        "Podaj poprawne login i hasło");
+                if(user.getProbes() == 3){
+                    user.setStatus(false);
+                    loginService.changeStatus(user.getUser_id());
+                }
             }
         } else {
             loginService.getAlertWindow(
@@ -55,6 +65,8 @@ public class LoginController {
                     "BŁAD LOGOWANIA",
                     "Podaj poprawne login i hasło");
         }
+        loginService.clearField(tfLogin);
+        loginService.clearField(pfPassword);
     }
 
     public void initialize() throws NoSuchAlgorithmException {

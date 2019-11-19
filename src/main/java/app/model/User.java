@@ -22,6 +22,7 @@ public class User {
     private String password;
 //    @Value("${value:true}")
     private boolean status = true;
+    private int probes;
 
     public User(String login, String password) {
         this.login = login;
