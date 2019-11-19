@@ -20,8 +20,8 @@ public class User {
     private int user_id;
     private String login;
     private String password;
-    @Value("true")
-    private boolean status;
+//    @Value("${value:true}")
+    private boolean status = true;
 
     public User(String login, String password) {
         this.login = login;
