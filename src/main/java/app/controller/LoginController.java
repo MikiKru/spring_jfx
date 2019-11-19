@@ -34,11 +34,20 @@ public class LoginController {
         if(user != null){
             loginService.clearField(tfLogin);
             loginService.clearField(pfPassword);
-            loginService.getAlertWindow(
-                    Alert.AlertType.INFORMATION,
-                    "logowanie",
-                    "ZALOGOWANO",
-                    "Zalogowano użytkownika o loginie " + user.getLogin());
+            if(user.isStatus()) {
+                loginService.getAlertWindow(
+                        Alert.AlertType.INFORMATION,
+                        "logowanie",
+                        "ZALOGOWANO",
+                        "Zalogowano użytkownika o loginie " + user.getLogin());
+            } else {
+                loginService.getAlertWindow(
+                        Alert.AlertType.INFORMATION,
+                        "logowanie",
+                        "KONTO NIEAKTYWNE",
+                        "Twoje konto został zablokowane!");
+
+            }
         } else {
             loginService.getAlertWindow(
                     Alert.AlertType.INFORMATION,

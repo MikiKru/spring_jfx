@@ -35,7 +35,7 @@
             <Insets bottom="20.0" left="100.0" right="100.0" />
          </VBox.margin>
       </PasswordField>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAction" style="-fx-background-color: lightgreen;" text="Button">
+      <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAction" style="-fx-background-color: lightgreen;" text="Button">
          <font>
             <Font size="36.0" />
          </font>
