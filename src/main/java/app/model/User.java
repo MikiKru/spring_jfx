@@ -22,5 +22,9 @@ public class User {
     private String password;
     @Value("true")
     private boolean status;
-    
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 }
