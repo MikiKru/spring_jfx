@@ -2,7 +2,9 @@ package app.service;
 
 import app.model.User;
 import app.repository.LoginRepository;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
@@ -47,5 +49,7 @@ public class LoginService {
         a.show();
     }
     // czyszczenie pól TF i PF
-
+    public void clearField(TextField textField){
+        textField.clear();
+    }
 }

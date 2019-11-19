@@ -32,6 +32,8 @@ public class LoginController {
         User user = loginService.loginUser(
                 tfLogin.getText(), pfPassword.getText());
         if(user != null){
+            loginService.clearField(tfLogin);
+            loginService.clearField(pfPassword);
             loginService.getAlertWindow(
                     Alert.AlertType.INFORMATION,
                     "logowanie",
