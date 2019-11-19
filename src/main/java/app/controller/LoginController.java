@@ -37,4 +37,10 @@ public class LoginController {
         }
     }
 
+    public void initialize(){
+        loginService.registerUser("x","x");
+        loginService.registerUser("y","y");
+        loginService.registerUser("z","z");
+    }
+
 }
