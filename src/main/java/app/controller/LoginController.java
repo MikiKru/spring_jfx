@@ -3,6 +3,7 @@ package app.controller;
 import app.service.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,21 @@ public class LoginController {
         User user = loginService.loginUser(
                 tfLogin.getText(), pfPassword.getText());
         if(user != null){
-            System.out.println("Zalogowano");
+            loginService.getAlertWindow(
+                    Alert.AlertType.INFORMATION,
+                    "logowanie",
+                    "ZALOGOWANO",
+                    "Zalogowano użytkownika o loginie " + user.getLogin());
         } else {
-            System.out.println("Błąd logowania!");
+            loginService.getAlertWindow(
+                    Alert.AlertType.INFORMATION,
+                    "logowanie",
+                    "BŁAD LOGOWANIA",
+                    "Podaj poprawne login i hasło");
         }
     }
 
-    public void initialize(){
+    public void initialize() throws NoSuchAlgorithmException {
         loginService.registerUser("x","x");
         loginService.registerUser("y","y");
         loginService.registerUser("z","z");

@@ -2,6 +2,7 @@ package app.service;
 
 import app.model.User;
 import app.repository.LoginRepository;
+import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,16 @@ public class LoginService {
                         getPasswordEncodedByMd5(password));
     }
     // rejestracja użytkownika
-    public User registerUser(String login, String password){
-        return loginRepository.save(new User(login,password));
+    public User registerUser(String login, String password) throws NoSuchAlgorithmException {
+        return loginRepository.save(new User(login,getPasswordEncodedByMd5(password)));
     }
-
+    public void getAlertWindow(Alert.AlertType alertType, String title, String header, String content){
+        Alert a = new Alert(alertType);
+        a.setTitle(title);
+        a.setHeaderText(header);
+        a.setContentText(content);
+        a.show();
+    }
     // czyszczenie pól TF i PF
 
 }
